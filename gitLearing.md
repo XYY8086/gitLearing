@@ -1,6 +1,6 @@
 ### Git使用学习经历
 - 1. [菜鸟教程](https://www.runoob.com/git/git-tutorial.html)
-- 2. 
+- 2. [codesheep推送](https://mp.weixin.qq.com/s/DQVVYOWdOPuRsy3m0fg6Xg)
 
 #### 0.Git安装配置
 Git在widows上直接下载exe文件进行安装，安装后需要配置**用户名**和**用户邮箱**。Git提供了git config命令用于配置git
@@ -16,7 +16,7 @@ Git在widows上直接下载exe文件进行安装，安装后需要配置**用户
 - clone远程仓库为工作目录
 - 在工作目录中修改代码，同时更新他人的修改
 - 修改完毕后，可以查看different,推送到远程仓库
-
+![workprocess](pic/git工作流程.jpg)
 
 #### 2. git的基本操作
 ##### 2.1 Git工作流程图
@@ -49,14 +49,26 @@ remote repository:远程仓库
 `git commit [file1] [file2] - m "message"`:提交缓存区的指定文件到仓库
 - git commit -a
 忽略提交到暂存区的步骤，直接提交到仓库
+- git commit --amend
+本次提交覆盖上一次提交，当上一次提交之后发现有东西忘记修改了，考虑到重新commit的话会因为对一个问题的多次提交而产生混乱，此时可以覆盖上一次commit.
 ###### 2.2.4 查看status
 - git status
 查看自上次提交之后是否对文件再次修改
+- git status -s
+以紧凑格式查看文件状态
+??: 新添加的未跟踪文件
+A: 新添加到暂存区中的文件
+M: 左边的 M 表示该文件被修改了并放入了暂存区
+M: 右边的 M 表示该文件被修改了但是还没放入暂存区
+D: 被删除的文件
 ###### 2.2.5 比较
+![git diff](pic/git_diff.jpg)
 - git diff
 `git diff file`:显示暂存区与工作区中file文件的差异
 `git diff --cached file` or `git diff --staged file`:显示暂存区与上一次commit的差异
-`git diff [first-brach]...[second-brach]`:显示两次提交的差异
+`git diff [first-commit]...[second-commit]`:显示两次提交的差异
+`git diff dev`：将工作区与指定分支dev进行比较
+`git diff HEAD`:将HEAD指针指向的commit与工作区进行比较
 ###### 2.2.6 回退
 - git reset
 
@@ -81,7 +93,18 @@ remote repository:远程仓库
 查看指定用户的提交历史记录
 - git blame file
 查看指定文件的历史提交记录
-
+##### 2.2.10 回滚
+![reset](pic/reset.jpg)
+- git checkout -- files
+将files从暂存区复制到工作区，覆盖工作区的更改
+- git reset -- files
+撤销最近的一次commit
+- git reset commitID --sort
+只改变commit信息，不改变暂存区和工作区
+- git reset commitID 
+回滚暂存区，不影响工作区
+- git reset commitID --hard
+回滚暂存区和工作区
 ##### 2.3 远程操作
 ###### 2.3.1 git remote
 - git remote -v
@@ -121,6 +144,7 @@ remote repository:远程仓库
 - git branch brachname
 创建分支，分支名为brachname；例如在matster中创建分支dev,dev保存的是最近一次提交的内容，修改master的内容并提交并不会影响dev分支
 - git checkout branchname | git checkout -b branchname
+![git checkout branch](pic/git_checkout.jpg)
 切换到名为brachname的分支，切换分支时git会根据最新的分支快照更新当前文件夹内容.
 -b 参数创建分支并切换到新建的分支
 - git branch -d branchname
